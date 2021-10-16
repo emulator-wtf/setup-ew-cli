@@ -1,0 +1,14 @@
+{
+  "name": "setup-ew-cli",
+  "version": "0.0.1",
+  "description": "Github action to setup ew-cli in a workflow",
+  "main": "index.js",
+  "scripts": {},
+  "homepage": "https://github.com/emulator-wtf/setup-ew-cli",
+  "license": "MIT",
+  "dependencies": {
+    "@actions/core": "^1.2.6",
+    "@actions/tool-cache": "^1.6.0"
+  },
+  "devDependencies": {}
+}
