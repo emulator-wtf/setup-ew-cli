@@ -52,13 +52,16 @@ function setup() {
                     version = (0, core_1.getInput)('version');
                     (0, core_1.exportVariable)('EW_VERSION', version);
                     binPath = process_1.env.HOME + "/.cache/emulator-wtf/bin";
+                    (0, core_1.info)("Creating " + binPath);
                     return [4, fs_1.promises.mkdir(binPath, { recursive: true })];
                 case 1:
                     _a.sent();
                     executable = binPath + "/ew-cli";
-                    if (!(0, fs_1.existsSync)(executable)) return [3, 6];
+                    if (!!(0, fs_1.existsSync)(executable)) return [3, 6];
+                    (0, core_1.info)(executable + " doesn't exist, looking in cache");
                     cachedCli = (0, tool_cache_1.find)('emulatorwtf-wrapper', version);
                     if (!!cachedCli) return [3, 4];
+                    (0, core_1.info)("ew-cli not found in cache, downloading....");
                     return [4, (0, tool_cache_1.downloadTool)(EW_CLI_URL)];
                 case 2:
                     path = _a.sent();
@@ -67,14 +70,19 @@ function setup() {
                 case 3:
                     _a.sent();
                     return [3, 6];
-                case 4: return [4, fs_1.promises.copyFile(cachedCli, executable)];
+                case 4:
+                    (0, core_1.info)("ew-cli not found in cache!");
+                    return [4, fs_1.promises.copyFile(cachedCli, executable)];
                 case 5:
                     _a.sent();
                     _a.label = 6;
                 case 6:
+                    (0, fs_1.chmodSync)(executable, "755");
                     (0, core_1.addPath)(binPath);
                     cachedJar = (0, tool_cache_1.find)('emulatorwtf-jar', version);
+                    (0, core_1.info)("looking for jar in cache!");
                     if (!cachedJar) return [3, 8];
+                    (0, core_1.info)("Jar found in cache!");
                     return [4, fs_1.promises.copyFile(cachedJar, process_1.env.HOME + "/.cache/emulator-wtf/ew-cli-" + version + ".jar")];
                 case 7:
                     _a.sent();
@@ -85,11 +93,13 @@ function setup() {
                     (0, core_1.info)('ew-cli installed:');
                     (0, core_1.info)(versionOutput.stdout);
                     if (!cachedJar) {
+                        (0, core_1.info)("Caching jar...");
                         (0, tool_cache_1.cacheFile)(process_1.env.HOME + "/.cache/emulator-wtf/ew-cli-" + version + ".jar", 'ew-cli.jar', 'emulatorwtf-jar', version);
                     }
                     return [3, 11];
                 case 10:
                     e_1 = _a.sent();
+                    (0, core_1.warning)("ew-cli installatopn failed: " + e_1);
                     (0, core_1.setFailed)(e_1);
                     return [3, 11];
                 case 11: return [2];
