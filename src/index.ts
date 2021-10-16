@@ -1,8 +1,8 @@
 import { existsSync, promises } from 'fs';
 import { env } from 'process';
 
-import { addPath, exportVariable, getInput, setFailed } from '@actions/core';
-import { exec } from '@actions/exec';
+import { addPath, exportVariable, getInput, info, setFailed } from '@actions/core';
+import { getExecOutput } from '@actions/exec';
 import { cacheFile, downloadTool, find } from '@actions/tool-cache';
 
 const EW_CLI_URL = "https://maven.emulator.wtf/releases/ew-cli";
@@ -33,7 +33,9 @@ export default async function setup() {
       await promises.copyFile(cachedJar, `${env.HOME}/.cache/emulator-wtf/ew-cli-${version}.jar`);
     }
 
-    await exec('ew-cli --version');
+    const versionOutput = await getExecOutput('ew-cli --version');
+    info('ew-cli installed:');
+    info(versionOutput.stdout);
 
     if (!cachedJar) {
       cacheFile(`${env.HOME}/.cache/emulator-wtf/ew-cli-${version}.jar`, 'ew-cli.jar', 'emulatorwtf-jar', version);

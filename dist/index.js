@@ -36,46 +36,63 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 exports.__esModule = true;
+var fs_1 = require("fs");
+var process_1 = require("process");
 var core_1 = require("@actions/core");
 var exec_1 = require("@actions/exec");
 var tool_cache_1 = require("@actions/tool-cache");
-var fs_1 = require("fs");
-var process_1 = require("process");
 var EW_CLI_URL = "https://maven.emulator.wtf/releases/ew-cli";
 function setup() {
     return __awaiter(this, void 0, void 0, function () {
-        var version, cachedCli, path, cachedJar, e_1;
+        var version, binPath, executable, cachedCli, path, cachedJar, versionOutput, e_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 6, , 7]);
+                    _a.trys.push([0, 10, , 11]);
                     version = (0, core_1.getInput)('version');
                     (0, core_1.exportVariable)('EW_VERSION', version);
-                    cachedCli = (0, tool_cache_1.find)('emulatorwtf-wrapper', version);
-                    if (!!cachedCli) return [3, 2];
-                    return [4, (0, tool_cache_1.downloadTool)(EW_CLI_URL)];
+                    binPath = process_1.env.HOME + "/.cache/emulator-wtf/bin";
+                    return [4, fs_1.promises.mkdir(binPath, { recursive: true })];
                 case 1:
+                    _a.sent();
+                    executable = binPath + "/ew-cli";
+                    if (!(0, fs_1.existsSync)(executable)) return [3, 6];
+                    cachedCli = (0, tool_cache_1.find)('emulatorwtf-wrapper', version);
+                    if (!!cachedCli) return [3, 4];
+                    return [4, (0, tool_cache_1.downloadTool)(EW_CLI_URL)];
+                case 2:
                     path = _a.sent();
                     (0, tool_cache_1.cacheFile)(path, 'ew-cli', 'emulatorwtf-wrapper', version);
-                    (0, core_1.addPath)(path);
-                    _a.label = 2;
-                case 2:
-                    cachedJar = (0, tool_cache_1.find)('emulatorwtf-jar', version);
-                    if (!cachedJar) return [3, 4];
-                    return [4, fs_1.promises.copyFile(cachedJar, process_1.env.HOME + "/.cache/emulator-wtf/ew-cli-" + version + ".jar")];
+                    return [4, fs_1.promises.copyFile(path, executable)];
                 case 3:
                     _a.sent();
-                    _a.label = 4;
-                case 4: return [4, (0, exec_1.exec)('ew-cli --version')];
+                    return [3, 6];
+                case 4: return [4, fs_1.promises.copyFile(cachedCli, executable)];
                 case 5:
                     _a.sent();
-                    (0, tool_cache_1.cacheFile)(process_1.env.HOME + "/.cache/emulator-wtf/ew-cli-" + version + ".jar", 'ew-cli.jar', 'emulatorwtf-jar', version);
-                    return [3, 7];
+                    _a.label = 6;
                 case 6:
+                    (0, core_1.addPath)(binPath);
+                    cachedJar = (0, tool_cache_1.find)('emulatorwtf-jar', version);
+                    if (!cachedJar) return [3, 8];
+                    return [4, fs_1.promises.copyFile(cachedJar, process_1.env.HOME + "/.cache/emulator-wtf/ew-cli-" + version + ".jar")];
+                case 7:
+                    _a.sent();
+                    _a.label = 8;
+                case 8: return [4, (0, exec_1.getExecOutput)('ew-cli --version')];
+                case 9:
+                    versionOutput = _a.sent();
+                    (0, core_1.info)('ew-cli installed:');
+                    (0, core_1.info)(versionOutput.stdout);
+                    if (!cachedJar) {
+                        (0, tool_cache_1.cacheFile)(process_1.env.HOME + "/.cache/emulator-wtf/ew-cli-" + version + ".jar", 'ew-cli.jar', 'emulatorwtf-jar', version);
+                    }
+                    return [3, 11];
+                case 10:
                     e_1 = _a.sent();
                     (0, core_1.setFailed)(e_1);
-                    return [3, 7];
-                case 7: return [2];
+                    return [3, 11];
+                case 11: return [2];
             }
         });
     });
