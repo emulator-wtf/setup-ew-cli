@@ -44,7 +44,7 @@ var tool_cache_1 = require("@actions/tool-cache");
 var EW_CLI_URL = "https://maven.emulator.wtf/releases/ew-cli";
 function setup() {
     return __awaiter(this, void 0, void 0, function () {
-        var version, binPath, executable, cachedCli, path, cachedJar, versionOutput, e_1;
+        var version, binPath, executable, cachedCli, path, cachedJar, e_1;
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
@@ -52,16 +52,16 @@ function setup() {
                     version = (0, core_1.getInput)('version');
                     (0, core_1.exportVariable)('EW_VERSION', version);
                     binPath = process_1.env.HOME + "/.cache/emulator-wtf/bin";
-                    (0, core_1.info)("Creating " + binPath);
+                    (0, core_1.debug)("Creating " + binPath);
                     return [4, fs_1.promises.mkdir(binPath, { recursive: true })];
                 case 1:
                     _a.sent();
                     executable = binPath + "/ew-cli";
                     if (!!(0, fs_1.existsSync)(executable)) return [3, 6];
-                    (0, core_1.info)(executable + " doesn't exist, looking in cache");
+                    (0, core_1.debug)(executable + " doesn't exist, looking in cache");
                     cachedCli = (0, tool_cache_1.find)('emulatorwtf-wrapper', version);
                     if (!!cachedCli) return [3, 4];
-                    (0, core_1.info)("ew-cli not found in cache, downloading....");
+                    (0, core_1.debug)("ew-cli not found in cache, downloading....");
                     return [4, (0, tool_cache_1.downloadTool)(EW_CLI_URL)];
                 case 2:
                     path = _a.sent();
@@ -71,7 +71,7 @@ function setup() {
                     _a.sent();
                     return [3, 6];
                 case 4:
-                    (0, core_1.info)("ew-cli not found in cache!");
+                    (0, core_1.debug)("ew-cli not found in cache!");
                     return [4, fs_1.promises.copyFile(cachedCli, executable)];
                 case 5:
                     _a.sent();
@@ -80,20 +80,18 @@ function setup() {
                     (0, fs_1.chmodSync)(executable, "755");
                     (0, core_1.addPath)(binPath);
                     cachedJar = (0, tool_cache_1.find)('emulatorwtf-jar', version);
-                    (0, core_1.info)("looking for jar in cache!");
+                    (0, core_1.debug)("looking for jar in cache!");
                     if (!cachedJar) return [3, 8];
-                    (0, core_1.info)("Jar found in cache!");
+                    (0, core_1.debug)("Jar found in cache!");
                     return [4, fs_1.promises.copyFile(cachedJar, process_1.env.HOME + "/.cache/emulator-wtf/ew-cli-" + version + ".jar")];
                 case 7:
                     _a.sent();
                     _a.label = 8;
-                case 8: return [4, (0, exec_1.getExecOutput)('ew-cli --version')];
+                case 8: return [4, (0, exec_1.exec)('ew-cli --version')];
                 case 9:
-                    versionOutput = _a.sent();
-                    (0, core_1.info)('ew-cli installed:');
-                    (0, core_1.info)(versionOutput.stdout);
+                    _a.sent();
                     if (!cachedJar) {
-                        (0, core_1.info)("Caching jar...");
+                        (0, core_1.debug)("Caching jar...");
                         (0, tool_cache_1.cacheFile)(process_1.env.HOME + "/.cache/emulator-wtf/ew-cli-" + version + ".jar", 'ew-cli.jar', 'emulatorwtf-jar', version);
                     }
                     return [3, 11];
