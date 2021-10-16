@@ -7,7 +7,7 @@ import { cacheFile, downloadTool, find } from '@actions/tool-cache';
 
 const EW_CLI_URL = "https://maven.emulator.wtf/releases/ew-cli";
 
-export default async function setup() {
+async function setup() {
   try {
     const version = getInput('version');
     exportVariable('EW_VERSION', version);
@@ -53,3 +53,5 @@ export default async function setup() {
     setFailed(e);
   }
 }
+
+setup();

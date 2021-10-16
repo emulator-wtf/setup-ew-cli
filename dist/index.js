@@ -107,5 +107,5 @@ function setup() {
         });
     });
 }
-exports["default"] = setup;
+setup();
 //# sourceMappingURL=index.js.map
