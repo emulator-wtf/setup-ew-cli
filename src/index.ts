@@ -47,7 +47,7 @@ async function setup() {
       cacheFile(`${env.HOME}/.cache/emulator-wtf/ew-cli-${version}.jar`, 'ew-cli.jar', 'emulatorwtf-jar', version);
     }
   } catch (e) {
-    warning(`ew-cli installatopn failed: ${e}`);
+    warning(`ew-cli installation failed: ${e}`);
     setFailed(e);
   }
 }
