@@ -97,7 +97,7 @@ function setup() {
                     return [3, 11];
                 case 10:
                     e_1 = _a.sent();
-                    (0, core_1.warning)("ew-cli installatopn failed: " + e_1);
+                    (0, core_1.warning)("ew-cli installation failed: " + e_1);
                     (0, core_1.setFailed)(e_1);
                     return [3, 11];
                 case 11: return [2];
