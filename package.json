@@ -1,6 +1,6 @@
 {
   "name": "setup-ew-cli",
-  "version": "0.0.2",
+  "version": "0.9.4",
   "description": "Github action to setup ew-cli in a workflow",
   "scripts": {
     "build": "rimraf dist && tsc"
