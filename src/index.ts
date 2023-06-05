@@ -37,7 +37,7 @@ async function setup() {
     debug(`looking for jar in cache!`);
     if (cachedJar) {
       debug(`Jar found in cache!`);
-      await promises.copyFile(cachedJar, `${env.HOME}/.cache/emulator-wtf/ew-cli-${version}.jar`);
+      await promises.copyFile(cachedJar + "/ew-cli.jar", `${env.HOME}/.cache/emulator-wtf/ew-cli-${version}.jar`);
     }
 
     await exec('ew-cli --version');

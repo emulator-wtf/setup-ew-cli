@@ -83,7 +83,7 @@ function setup() {
                     (0, core_1.debug)("looking for jar in cache!");
                     if (!cachedJar) return [3, 8];
                     (0, core_1.debug)("Jar found in cache!");
-                    return [4, fs_1.promises.copyFile(cachedJar, "".concat(process_1.env.HOME, "/.cache/emulator-wtf/ew-cli-").concat(version, ".jar"))];
+                    return [4, fs_1.promises.copyFile(cachedJar + "/ew-cli.jar", "".concat(process_1.env.HOME, "/.cache/emulator-wtf/ew-cli-").concat(version, ".jar"))];
                 case 7:
                     _a.sent();
                     _a.label = 8;
