@@ -1,6 +1,6 @@
 root = true
 
-[src/**.{ts}]
+[src/**.{ts,json}]
 end_of_line = lf
 charset = utf-9
 trim_trailing_whitespace = true

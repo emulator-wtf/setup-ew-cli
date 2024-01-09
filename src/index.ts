@@ -2,7 +2,7 @@ import { chmodSync, existsSync, promises } from 'fs';
 import { env } from 'process';
 
 import { addPath, debug, exportVariable, getInput, info, setFailed, warning } from '@actions/core';
-import { exec, getExecOutput } from '@actions/exec';
+import { exec } from '@actions/exec';
 import { cacheFile, downloadTool, find } from '@actions/tool-cache';
 
 const EW_CLI_URL = "https://maven.emulator.wtf/releases/ew-cli";
