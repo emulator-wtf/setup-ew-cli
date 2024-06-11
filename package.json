@@ -13,7 +13,7 @@
     "@actions/tool-cache": "^2.0.1"
   },
   "devDependencies": {
-    "@types/node": "^20.14.0",
+    "@types/node": "^20.14.2",
     "typescript": "^5.4.5",
     "rimraf": "^5.0.7"
   }
