@@ -1,7 +1,7 @@
 import { chmodSync, existsSync, promises } from 'fs';
 import { env } from 'process';
 
-import { addPath, debug, exportVariable, getInput, info, setFailed, warning } from '@actions/core';
+import { addPath, debug, exportVariable, getInput, setFailed, warning } from '@actions/core';
 import { exec } from '@actions/exec';
 import { cacheFile, downloadTool, find } from '@actions/tool-cache';
 
@@ -23,7 +23,7 @@ async function setup() {
       if (!cachedCli) {
         debug(`ew-cli not found in cache, downloading....`);
         const path = await downloadTool(EW_CLI_URL);
-        cacheFile(path, 'ew-cli', 'emulatorwtf-wrapper', version);
+        await cacheFile(path, 'ew-cli', 'emulatorwtf-wrapper', version);
         await promises.copyFile(path, executable);
       } else {
         debug(`ew-cli not found in cache!`);
@@ -44,7 +44,7 @@ async function setup() {
 
     if (!cachedJar) {
       debug(`Caching jar...`);
-      cacheFile(`${env.HOME}/.cache/emulator-wtf/ew-cli-${version}.jar`, 'ew-cli.jar', 'emulatorwtf-jar', version);
+      await cacheFile(`${env.HOME}/.cache/emulator-wtf/ew-cli-${version}.jar`, 'ew-cli.jar', 'emulatorwtf-jar', version);
     }
   } catch (e) {
     warning(`ew-cli installation failed: ${e}`);
@@ -52,4 +52,4 @@ async function setup() {
   }
 }
 
-setup();
+void setup();
