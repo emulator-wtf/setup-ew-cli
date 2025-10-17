@@ -9,8 +9,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 var __generator = (this && this.__generator) || function (thisArg, body) {
-    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
-    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g = Object.create((typeof Iterator === "function" ? Iterator : Object).prototype);
+    return g.next = verb(0), g["throw"] = verb(1), g["return"] = verb(2), typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
     function verb(n) { return function (v) { return step([n, v]); }; }
     function step(op) {
         if (f) throw new TypeError("Generator is already executing.");
@@ -48,7 +48,7 @@ function setup() {
         return __generator(this, function (_a) {
             switch (_a.label) {
                 case 0:
-                    _a.trys.push([0, 10, , 11]);
+                    _a.trys.push([0, 13, , 14]);
                     version = (0, core_1.getInput)('version');
                     (0, core_1.exportVariable)('EW_VERSION', version);
                     binPath = "".concat(process_1.env.HOME, "/.cache/emulator-wtf/bin");
@@ -57,53 +57,57 @@ function setup() {
                 case 1:
                     _a.sent();
                     executable = "".concat(binPath, "/ew-cli");
-                    if (!!(0, fs_1.existsSync)(executable)) return [3, 6];
+                    if (!!(0, fs_1.existsSync)(executable)) return [3, 7];
                     (0, core_1.debug)("".concat(executable, " doesn't exist, looking in cache"));
                     cachedCli = (0, tool_cache_1.find)('emulatorwtf-wrapper', version);
-                    if (!!cachedCli) return [3, 4];
+                    if (!!cachedCli) return [3, 5];
                     (0, core_1.debug)("ew-cli not found in cache, downloading....");
                     return [4, (0, tool_cache_1.downloadTool)(EW_CLI_URL)];
                 case 2:
                     path = _a.sent();
-                    (0, tool_cache_1.cacheFile)(path, 'ew-cli', 'emulatorwtf-wrapper', version);
-                    return [4, fs_1.promises.copyFile(path, executable)];
+                    return [4, (0, tool_cache_1.cacheFile)(path, 'ew-cli', 'emulatorwtf-wrapper', version)];
                 case 3:
                     _a.sent();
-                    return [3, 6];
+                    return [4, fs_1.promises.copyFile(path, executable)];
                 case 4:
+                    _a.sent();
+                    return [3, 7];
+                case 5:
                     (0, core_1.debug)("ew-cli not found in cache!");
                     return [4, fs_1.promises.copyFile(cachedCli, executable)];
-                case 5:
-                    _a.sent();
-                    _a.label = 6;
                 case 6:
+                    _a.sent();
+                    _a.label = 7;
+                case 7:
                     (0, fs_1.chmodSync)(executable, "755");
                     (0, core_1.addPath)(binPath);
                     cachedJar = (0, tool_cache_1.find)('emulatorwtf-jar', version);
                     (0, core_1.debug)("looking for jar in cache!");
-                    if (!cachedJar) return [3, 8];
+                    if (!cachedJar) return [3, 9];
                     (0, core_1.debug)("Jar found in cache!");
                     return [4, fs_1.promises.copyFile(cachedJar + "/ew-cli.jar", "".concat(process_1.env.HOME, "/.cache/emulator-wtf/ew-cli-").concat(version, ".jar"))];
-                case 7:
+                case 8:
                     _a.sent();
-                    _a.label = 8;
-                case 8: return [4, (0, exec_1.exec)('ew-cli --version')];
-                case 9:
-                    _a.sent();
-                    if (!cachedJar) {
-                        (0, core_1.debug)("Caching jar...");
-                        (0, tool_cache_1.cacheFile)("".concat(process_1.env.HOME, "/.cache/emulator-wtf/ew-cli-").concat(version, ".jar"), 'ew-cli.jar', 'emulatorwtf-jar', version);
-                    }
-                    return [3, 11];
+                    _a.label = 9;
+                case 9: return [4, (0, exec_1.exec)('ew-cli --version')];
                 case 10:
+                    _a.sent();
+                    if (!!cachedJar) return [3, 12];
+                    (0, core_1.debug)("Caching jar...");
+                    return [4, (0, tool_cache_1.cacheFile)("".concat(process_1.env.HOME, "/.cache/emulator-wtf/ew-cli-").concat(version, ".jar"), 'ew-cli.jar', 'emulatorwtf-jar', version)];
+                case 11:
+                    _a.sent();
+                    _a.label = 12;
+                case 12: return [3, 14];
+                case 13:
                     e_1 = _a.sent();
                     (0, core_1.warning)("ew-cli installation failed: ".concat(e_1));
                     (0, core_1.setFailed)(e_1);
-                    return [3, 11];
-                case 11: return [2];
+                    return [3, 14];
+                case 14: return [2];
             }
         });
     });
 }
-setup();
+void setup();
 //# sourceMappingURL=index.js.map
