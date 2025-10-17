@@ -1,0 +1,16 @@
+[tools]
+nodejs = '20.19.5'
+
+[tasks]
+deps = 'npm ci'
+
+[tasks.build]
+run = 'npm run build'
+depends = ['deps']
+
+[tasks.dist]
+depends = ['build']
+run = [
+  'rm -rf node_modules',
+  'npm ci --omit=dev --omit=optional'
+]
