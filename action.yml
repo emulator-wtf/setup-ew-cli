@@ -4,7 +4,7 @@ inputs:
   version:
     description: Version of ew-cli to install
     required: false
-    default: 0.12.6
+    default: 1.0.0-rc01
 branding:
   color: orange
   icon: smartphone
