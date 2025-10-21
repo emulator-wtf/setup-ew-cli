@@ -1,5 +1,5 @@
 [tools]
-nodejs = '20.19.5'
+nodejs = '24.10.0'
 
 [tasks]
 deps = 'npm ci'
