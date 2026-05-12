@@ -4,10 +4,13 @@ inputs:
   version:
     description: Version of ew-cli to install
     required: false
-    default: 0.12.6
+    default: 1.3.0
 branding:
   color: orange
   icon: smartphone
 runs:
-  using: node20
-  main: dist/index.js
+  using: composite
+  steps:
+    - uses: emulator-wtf/actions/setup-ew-cli@42753a2a6bda2e657741a7385131bf61db464899  # v1.0.0
+      with:
+        version: ${{ inputs.version }}
