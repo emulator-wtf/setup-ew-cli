@@ -6,7 +6,7 @@
 >
 > ```patch
 > - uses: emulator-wtf/setup-ew-cli@v1
-> + uses: emulator-wtf/actions/setup-ew-cli@v1.0.0
+> + uses: emulator-wtf/actions/setup-ew-cli@v1.0.1
 > ```
 >
 > We'll keep this action available as a redirect throughout the v1 series of releases.
