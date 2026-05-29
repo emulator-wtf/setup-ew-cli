@@ -11,6 +11,6 @@ branding:
 runs:
   using: composite
   steps:
-    - uses: emulator-wtf/actions/setup-ew-cli@42753a2a6bda2e657741a7385131bf61db464899  # v1.0.0
+    - uses: emulator-wtf/actions/setup-ew-cli@1a96fbe11f971a7f9da7d5e80eda476909224c78  # v1.0.1
       with:
         version: ${{ inputs.version }}
